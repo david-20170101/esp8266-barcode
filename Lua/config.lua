@@ -22,6 +22,7 @@ module.ENDPOINT = "$dp"
 module.uploadPOINT = "update"
 module.responsePOINT = "response"
 module.CardID = "CardID"
+module.BarCode = "BarCode"
 module.json = {}
 
 function module.SmartConfig(oldfile, newfile, pattern, repl)
