@@ -4,7 +4,7 @@ local module = {}
 local mqtt_connected = 0
 
 function module.serial_number()
-    print("sn" .. "::" .. config.ID)
+    print("$MQTT," .. config.CMD .. "," .. config.ID)
 end
 
 function module.mqtt_upload(upload)
