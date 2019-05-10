@@ -4,7 +4,7 @@ local module = {}
 local mqtt_connected = 0
 
 function module.serial_number()
-    print("$MQTT," .. config.CMD .. "," .. config.ID)
+    print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "]]")
 end
 
 function module.mqtt_upload(upload)
@@ -123,7 +123,7 @@ function module.mqtt_start(upload)
                         ok, table = pcall(sjson.decode, tmp)
                         if ok then
                            if (table.MAC==config.ID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName) then
-                               print("$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName )
+                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. "]]" )
                            end
                         end
                     end
