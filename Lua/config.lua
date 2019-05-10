@@ -15,6 +15,7 @@ module.PASSWORD = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 module.KEEPALIVE = 120
 module.MAX_MESSAGE_LENGTH = 1024
 module.ID = node.chipid() .. node.flashid()
+module.CMD = 1
 module.UID = "MAC"
 module.INTERVAL = 240000
 module.ENDPOINT = "$dp"
