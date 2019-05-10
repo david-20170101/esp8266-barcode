@@ -122,8 +122,8 @@ function module.mqtt_start(upload)
                         local tmp = string.sub(data,4)
                         ok, table = pcall(sjson.decode, tmp)
                         if ok then
-                           if (table.MAC==config.ID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName) then
-                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. ",]]" )
+                           if (table.MAC==config.ID and table.CardID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName) then
+                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.CardID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. ",]]" )
                            end
                         end
                     end
