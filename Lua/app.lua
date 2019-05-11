@@ -124,6 +124,8 @@ function module.mqtt_start(upload)
                         if ok then
                            if (table.MAC==config.ID and table.Reference and table.CardID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName) then
                                print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.Reference .. "," .. table.CardID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. ",]]" )
+                           elseif (table.MAC==config.ID and table.Reference) then
+                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.Reference .. ",]]" )
                            end
                         end
                     end
