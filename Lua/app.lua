@@ -4,7 +4,11 @@ local module = {}
 local mqtt_connected = 0
 
 function module.serial_number()
-    print("[[$MQTT," .. config.CMD .. "," .. config.ID .. ",]]")
+    --print("[[$MQTT," .. config.CMD .. "," .. config.ID .. ",]]")
+    local table = {}
+    table.MAC = config.ID
+    table.Reference = "255"
+    module.mqtt_start(table)
 end
 
 function module.mqtt_upload(upload)
