@@ -4,10 +4,9 @@ local module = {}
 local mqtt_connected = 0
 
 function module.serial_number()
-    --print("[[$MQTT," .. config.CMD .. "," .. config.ID .. ",]]")
     local table = {}
     table.MAC = config.ID
-    table.Reference = "255"
+    table.Reference = "256"
     module.mqtt_start(table)
 end
 
