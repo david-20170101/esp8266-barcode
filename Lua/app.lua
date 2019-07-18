@@ -13,7 +13,7 @@ end
 function module.mqtt_upload(upload)
     ok, table = pcall(sjson.decode, upload)
     if ok then
-       if table.CardID and table.SN==config.ID and table.Reference then
+       if table.CardID and table.SN==config.ID and table.Index then
           table.SN = nil
           table.MAC = config.ID
           module.mqtt_start(table)
