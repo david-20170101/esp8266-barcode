@@ -125,8 +125,8 @@ function module.mqtt_start(upload)
                         local tmp = string.sub(data,4)
                         ok, table = pcall(sjson.decode, tmp)
                         if ok then
-                           if (table.MAC==config.ID and table.Index and table.ISOK and table.CardID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName) then
-                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.Index .. "," .. table.ISOK .. "," .. table.CardID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. ",]]" )
+                           if (table.MAC==config.ID and table.Index and table.ISOK and table.CardID and table.BarCode and table.StyleNo and table.ColorNo and table.SizeNo and table.StyleName and table.ColorName and table.SizeName and table.QTY and table.Unit) then
+                               print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.Index .. "," .. table.ISOK .. "," .. table.CardID .. "," .. table.BarCode .. "," .. table.StyleNo .. "," .. table.ColorNo .. "," .. table.SizeNo .. "," .. table.StyleName .. "," .. table.ColorName .. "," .. table.SizeName .. "," .. table.QTY .. "," .. table.Unit .. ",]]" )
                            elseif (table.MAC==config.ID and table.Index and table.ISOK) then
                                print("[[$MQTT," .. config.CMD .. "," .. config.ID .. "," .. table.Index .. "," .. table.ISOK .. ",]]" )
                            end
