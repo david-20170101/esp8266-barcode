@@ -6,7 +6,7 @@ local mqtt_connected = 0
 function module.serial_number()
     local table = {}
     table.MAC = config.ID
-    table.Reference = "256"
+    table.Index = "256"
     module.mqtt_start(table)
 end
 
