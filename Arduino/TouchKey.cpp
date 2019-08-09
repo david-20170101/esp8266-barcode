@@ -17,7 +17,7 @@ unsigned char TouchKey::scanPort()
   byte nCOL = ReadscanPort(0xf0);
   if  (nROW==0 & nCOL==0)
   {
-    returnVal = 0xff;
+    returnVal = 0xf0;
   } else {
     nROW = nROW >> 1;
     nCOL = nCOL >> 1;
