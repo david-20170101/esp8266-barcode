@@ -154,7 +154,7 @@ void loop()
     } else {
       delay(2000);
       getMQTTData();
-      if (MQTT_Data.ISOK || MQTT_Data.CMD != 0) {
+      if (MQTT_Data.ISOK && MQTT_Data.CMD != 0) {
           make3line();
           if (MQTT_Data.streamA==0xfe) {                     //盘点模式
               Lcd12864.display_GB2312_string(7,1,16,mqtt_fe);
