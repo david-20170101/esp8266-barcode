@@ -145,7 +145,7 @@ void loop()
       MQTTSerial.println(init_cmd); 
       delay(2000);
       getMQTTData();
-      if (MQTT_Data.ISOK) {
+      if (MQTT_Data.ISOK && MQTT_Data.CMD != 0) {
           makeSnUid();
           makeQRCODE();
           Lcd12864.display_QRCODE_string(1,1,6,qrcodemap);
