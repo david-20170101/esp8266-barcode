@@ -244,7 +244,7 @@ void loop()
         mqtt_temp[6+i] = MQTT_Data.streamB[i];
       }
       Lcd12864.display_GB2312_string(7,1,16,mqtt_temp);
-
+      digitalWrite(LEDA,HIGH);
       MQTT_Data.CMD = 0;
       sendMQTTData();
   }
