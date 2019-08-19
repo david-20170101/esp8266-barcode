@@ -163,6 +163,14 @@ void loop()
           } else if (MQTT_Data.streamA==0x00) {              //归仓模式
               Lcd12864.display_GB2312_string(7,1,16,mqtt_00);
           }
+      } else if (MQTT_Data.CMD != 0) {
+        CleanTEMP();
+        makeCardNo();
+        for (int i=0; i<MQTT_Data.LengthB; i++)
+        {
+          mqtt_temp[6+i] = MQTT_Data.streamB[i];
+        }
+        Lcd12864.display_GB2312_string(7,1,16,mqtt_temp);
       }
     }
   }
