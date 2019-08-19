@@ -162,6 +162,7 @@ void loop()
               Lcd12864.display_GB2312_string(7,1,16,mqtt_fd);
           } else if (MQTT_Data.streamA==0x00) {              //归仓模式
               Lcd12864.display_GB2312_string(7,1,16,mqtt_00);
+              HC595.HC595(MQTT_Data.streamA);
           }
       } else if (MQTT_Data.CMD != 0) {
         CleanTEMP();
