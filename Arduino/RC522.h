@@ -18,14 +18,18 @@ class RC522
 {
   private://函数内部用  是冒号不是分号
     // Init array that will store new NUID 
-    
+    unsigned char cardBuffer[16];
+    byte buffer[18];
+    byte block = 16;
 
   public: //函数外部用  是冒号不是分号
     byte nuidPICC[4]={0x00,0x00,0x00,0x00};
     unsigned char nuidPICC_SIZE;
+    unsigned char cardUID_SIZE = 13;
     RC522();   //构造函数 
     void initial_RC522(void);
     void loop_RC522(void);
     void get_RC522_CardID(unsigned char *cardID);
+    void get_RC522_CardUID(unsigned char *cardUID);
 };
 #endif
