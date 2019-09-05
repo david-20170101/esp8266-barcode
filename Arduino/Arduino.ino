@@ -167,7 +167,7 @@ void loop()
       } else if (MQTT_Data.CMD != 0) {
         CleanTEMP();
         makeCardNo();
-        for (int i=0; i<MQTT_Data.LengthB; i++)
+        for (int i=0; i<2*RC522.nuidPICC_SIZE; i++)
         {
           mqtt_temp[6+i] = MQTT_Data.streamB[i];
         }
@@ -240,15 +240,20 @@ void loop()
       digitalWrite(LEDA,HIGH);
       MQTT_Data.LengthB = 0;                                     //清空卡号
       memset(MQTT_Data.streamB, 0, sizeof MQTT_Data.streamB);    //清空卡号
-      MQTT_Data.LengthB = 2*RC522.nuidPICC_SIZE;  
+      MQTT_Data.LengthB = 2*RC522.nuidPICC_SIZE+RC522.cardUID_SIZE;
+      RC522.get_RC522_CardUID(mqtt_temp);
+      for (int i=0;i<RC522.cardUID_SIZE;i++)
+      {
+        MQTT_Data.streamB[i+2*RC522.nuidPICC_SIZE] = mqtt_temp[i];
+      }
       RC522.get_RC522_CardID(mqtt_temp);
-      for (int i=0;i<MQTT_Data.LengthB;i++)
+      for (int i=0;i<2*RC522.nuidPICC_SIZE;i++)
       {
         MQTT_Data.streamB[i] = mqtt_temp[i];
       }
       CleanTEMP();
       makeCardNo();
-      for (int i=0; i<MQTT_Data.LengthB; i++)
+      for (int i=0; i<2*RC522.nuidPICC_SIZE; i++)
       {
         mqtt_temp[6+i] = MQTT_Data.streamB[i];
       }
