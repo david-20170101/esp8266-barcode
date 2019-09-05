@@ -12,7 +12,8 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Instance of the class
 
-MFRC522::MIFARE_Key key; 
+MFRC522::MIFARE_Key key;
+MFRC522::StatusCode status;
 
 RC522::RC522(void)
 {
@@ -58,20 +59,64 @@ void RC522::loop_RC522(void)
       mfrc522.uid.uidByte[3] != nuidPICC[3] ) {
       //Serial.println(F("A new card has been detected."));
 
+      // Store cardUID into cardUID array
+      // Serial.println(F("Authenticating using key A..."));
+      status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &(mfrc522.uid));
+      if (status != MFRC522::STATUS_OK) {
+          // Serial.print(F("PCD_Authenticate() failed: "));
+          // Serial.println(mfrc522.GetStatusCodeName(status));
+          return;
+      }
+      // Read block
+      byte byteCount = sizeof(buffer);
+      status = mfrc522.MIFARE_Read(block, buffer, &byteCount);
+      if (status != MFRC522::STATUS_OK) {
+          // Serial.print(F("MIFARE_Read() failed: "));
+          // Serial.println(mfrc522.GetStatusCodeName(status));
+      } else {
+          bool check = false;
+          byte code ;
+          for(int i=0; i<sizeof(cardBuffer)/2; i++){
+              code = ~buffer[i+sizeof(cardBuffer)/2];
+              if ( buffer[i] == code ){
+                  check = true;
+              } else {
+                  break;
+              }
+          }
+          if (check){
+              for(int i=0; i<sizeof(cardBuffer)/2; i++){
+                if ((i<3) && (buffer[i]==0xff)) {
+                  cardBuffer[2*i]   = ~buffer[i];
+                  cardBuffer[2*i+1] = ~buffer[i];
+                } else {
+                  code = buffer[i];
+                  code = code >> 4;
+                  cardBuffer[2*i] = code + 0x30;
+                  code = buffer[i];
+                  code = code << 4;
+                  code = code >> 4;
+                  cardBuffer[2*i+1] = code + 0x30;
+                }
+              }
+              cardBuffer[2]=0x00;
+              for(int i=0; i<sizeof(cardBuffer); i++){
+                if ((i+3)>sizeof(cardBuffer)){
+                  cardBuffer[i] = 0x00;
+                } else {
+                  cardBuffer[i] = cardBuffer[i+3];
+                }
+              }
+          } else {
+              return;
+          }
+      }
       // Store NUID into nuidPICC array
       for (byte i = 0; i < mfrc522.uid.size; i++) {
         nuidPICC[i] = mfrc522.uid.uidByte[i];
       }
       nuidPICC_SIZE = mfrc522.uid.size;
-      //Serial.println(F("The NUID tag is:"));
-      //Serial.print(F("In hex: "));
-      //printHex(mfrc522.uid.uidByte, rfid.uid.size);
-      //Serial.println();
-      //Serial.print(F("In dec: "));
-      //printDec(mfrc522.uid.uidByte, rfid.uid.size);
-      //Serial.println();
   }
-  //else Serial.println(F("Card read previously."));
 
   // Halt PICC
   mfrc522.PICC_HaltA();
@@ -100,5 +145,11 @@ void RC522::get_RC522_CardID(unsigned char *cardID)
   }
   for (byte i = 0; i < sizeof(nuidPICC); i++) {
     nuidPICC[i]=0x00;
+  }
+}
+void RC522::get_RC522_CardUID(unsigned char *cardUID)
+{
+  for (byte i = 0; i < cardUID_SIZE; i++) {
+    cardUID[i] = cardBuffer[i];
   }
 }
